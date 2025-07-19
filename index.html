@@ -426,5 +426,13 @@
       <p>Copyright &#169; 2024 Keshav Garg. All Rights Reserved.</p>
     </footer>
     <script src="script.js"></script>
+    <script src="chat-widget.js"></script>
+    <script>
+        ChatWidget.init({
+            apiUrl: 'http://localhost:8000/chat',
+            urls: ['http://keshavg69.github.io/PortfolioWebsite/'],
+            companyName: 'Your Company'
+        });
+    </script>
   </body>
 </html>
