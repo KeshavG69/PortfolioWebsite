@@ -886,18 +886,55 @@
         
         // Synchronized streaming with content coordination
         let activeStreamingTimeouts = [];
+        let activeStreamingElements = []; // Track elements being streamed and their full text
         let streamingCoordinator = {
             reasoningActive: false,
             bufferedContent: null,
             bufferedSources: null,
             waitingForReasoning: false,
-            currentAiResponseDiv: null
+            currentAiResponseDiv: null,
+            fullReasoningData: [], // Store complete reasoning data for full population
+            streamingStopped: false // Flag to immediately stop word-by-word streaming
         };
         
         
         function clearActiveStreaming() {
             activeStreamingTimeouts.forEach(timeout => clearTimeout(timeout));
             activeStreamingTimeouts = [];
+            activeStreamingElements = [];
+        }
+        
+        // Complete any active reasoning streaming immediately (don't leave it mid-way)
+        function completeActiveReasoningStreaming() {
+            // IMMEDIATELY stop all word-by-word streaming
+            streamingCoordinator.streamingStopped = true;
+            console.log('🛑 Streaming stopped flag set - word-by-word streaming will halt');
+            
+            // If we have the current AI response div, populate it with complete reasoning data
+            if (streamingCoordinator.currentAiResponseDiv && streamingCoordinator.fullReasoningData.length > 0) {
+                const reasoningContentInner = streamingCoordinator.currentAiResponseDiv.querySelector('.reasoning-content-inner');
+                if (reasoningContentInner) {
+                    // Build complete reasoning HTML from full data
+                    const fullReasoningHTML = streamingCoordinator.fullReasoningData.map(step => 
+                        `<strong>${step.title}</strong><br>${step.thought || step.reasoning || ''}`
+                    ).join('<br><br>');
+                    
+                    // Set the complete reasoning content immediately
+                    reasoningContentInner.innerHTML = fullReasoningHTML;
+                    console.log('✅ Reasoning section populated with complete data');
+                }
+            } else {
+                // Fallback: Complete all active streaming elements immediately
+                activeStreamingElements.forEach(({ element, fullText }) => {
+                    if (element && fullText) {
+                        element.innerHTML = fullText;
+                    }
+                });
+            }
+            
+            // Clear timeouts and reset tracking
+            clearActiveStreaming();
+            streamingCoordinator.reasoningActive = false;
         }
         
         // Auto-close reasoning section with smooth animation
@@ -912,12 +949,6 @@
                 setTimeout(() => {
                     reasoningToggle.classList.remove('expanded');
                     reasoningContent.classList.remove('expanded');
-                    
-                    // Update header text to indicate completion
-                    const reasoningTitle = reasoningToggle.querySelector('h4');
-                    if (reasoningTitle) {
-                        reasoningTitle.textContent = 'Thinking Complete';
-                    }
                     
                     // Smooth scroll to content after reasoning closes
                     setTimeout(() => {
@@ -952,7 +983,17 @@
             // Mark reasoning as active
             streamingCoordinator.reasoningActive = true;
             
+            // Track this element for completion
+            activeStreamingElements.push({ element, fullText });
+            
             function addNextWord() {
+                // 🛑 CHECK IF STREAMING WAS STOPPED (content arrived)
+                if (streamingCoordinator.streamingStopped) {
+                    console.log('🛑 Word-by-word streaming stopped mid-way - content arrived');
+                    // Don't continue streaming - the complete function will handle full display
+                    return;
+                }
+                
                 if (currentIndex < words.length) {
                     const currentText = words.slice(0, currentIndex + 1).join(' ');
                     element.innerHTML = currentText;
@@ -972,10 +1013,7 @@
                         releaseBufferedContent();
                     }
                     
-                    // Auto-close reasoning section now that streaming is complete
-                    if (streamingCoordinator.currentAiResponseDiv) {
-                        autoCloseReasoningSection(streamingCoordinator.currentAiResponseDiv);
-                    }
+                    // Note: Don't auto-close reasoning section here - it should only close when content starts streaming
                     
                     if (onComplete) onComplete();
                 }
@@ -992,16 +1030,13 @@
             
             console.log('Releasing buffered content after reasoning completion');
             
-            // Create new streamData with buffered content
-            const finalStreamData = {
-                reasoning: [], // Don't show reasoning again, it's already displayed
-                content: streamingCoordinator.bufferedContent,
-                sources: streamingCoordinator.bufferedSources || [],
-                isStreaming: false
-            };
+            // Use updateContentOnly to properly handle the transition from reasoning to content
+            updateContentOnly(streamingCoordinator.currentAiResponseDiv, streamingCoordinator.bufferedContent);
             
-            // Show the buffered content
-            updateAIResponseDirectly(streamingCoordinator.currentAiResponseDiv, finalStreamData);
+            // Add sources if available
+            if (streamingCoordinator.bufferedSources && streamingCoordinator.bufferedSources.length > 0) {
+                addSourcesOnly(streamingCoordinator.currentAiResponseDiv, streamingCoordinator.bufferedSources);
+            }
             
             // Reset coordination state
             streamingCoordinator.bufferedContent = null;
@@ -1095,10 +1130,10 @@
                 }
             } else {
                 // 🎯 CONTENT IS NOW STARTING TO STREAM - TIME FOR "THINKING COMPLETE"!
-                console.log('🎯 Content starting to stream - marking thinking complete and closing reasoning!');
+                console.log('🎯 Content starting to stream - completing reasoning and closing reasoning!');
                 
-                // STOP any active reasoning word-by-word streaming immediately
-                clearActiveStreaming();
+                // COMPLETE any active reasoning word-by-word streaming immediately (don't leave it mid-way)
+                completeActiveReasoningStreaming();
                 
                 // Mark reasoning as complete when content starts streaming
                 streamingCoordinator.reasoningActive = false;
@@ -1426,6 +1461,16 @@
             messageInput.value = '';
             messageInput.style.height = 'auto';
             
+            // Reset streaming coordinator for new message
+            streamingCoordinator.fullReasoningData = [];
+            streamingCoordinator.reasoningActive = false;
+            streamingCoordinator.bufferedContent = null;
+            streamingCoordinator.bufferedSources = null;
+            streamingCoordinator.waitingForReasoning = false;
+            streamingCoordinator.currentAiResponseDiv = null;
+            streamingCoordinator.streamingStopped = false; // Reset stop flag for new message
+            clearActiveStreaming();
+            
             // Show loading and track first content arrival
             showLoading();
             console.log('Loader activated for smooth transition');
@@ -1557,6 +1602,10 @@
                                             
                                             streamData.reasoning.push(chunk.step);
                                             console.log(`✅ Added reasoning step: ${chunk.step.title} (Total: ${streamData.reasoning.length})`);
+                                            
+                                            // STORE COMPLETE REASONING DATA for full population when content arrives
+                                            streamingCoordinator.fullReasoningData.push(chunk.step);
+                                            console.log(`📚 Stored reasoning step for completion: ${chunk.step.title} (Total stored: ${streamingCoordinator.fullReasoningData.length})`);
                                             
                                             // Stream only the new step - don't rebuild everything
                                             try {
