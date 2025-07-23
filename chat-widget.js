@@ -9,6 +9,7 @@
     // Default configuration
     const defaultConfig = {
         apiUrl: 'http://localhost:8000/chat',
+        proxyUrl: null, // New: Support for secure proxy URLs
         urls: [],
         companyName: 'Assistant',
         position: 'bottom-right',
@@ -75,13 +76,13 @@
                 .chat-bubble {
                     width: 60px;
                     height: 60px;
-                    background: linear-gradient(135deg, #1a1a1a 0%, #000000 100%);
+                    background: linear-gradient(135deg, #2563eb, #7c3aed);
                     border-radius: 50%;
                     display: flex;
                     align-items: center;
                     justify-content: center;
                     cursor: pointer;
-                    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+                    box-shadow: 0 4px 20px rgba(37, 99, 235, 0.3);
                     transition: all 0.3s ease;
                     position: relative;
                     overflow: hidden;
@@ -89,7 +90,7 @@
 
                 .chat-bubble:hover {
                     transform: scale(1.1);
-                    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.4);
+                    box-shadow: 0 6px 25px rgba(37, 99, 235, 0.4);
                 }
 
                 .chat-bubble::before {
@@ -154,7 +155,7 @@
 
                 /* Chat header */
                 .chat-header {
-                    background: linear-gradient(135deg, #1a1a1a 0%, #000000 100%);
+                    background: linear-gradient(135deg, #2563eb, #7c3aed);
                     color: white;
                     padding: 20px;
                     display: flex;
@@ -318,7 +319,7 @@
                 .reasoning-content {
                     max-height: 0;
                     overflow: hidden;
-                    transition: max-height 0.3s ease-out;
+                    transition: max-height 0.1s ease-out;
                     background: #f8f9fa;
                     border-bottom: 1px solid #e9ecef;
                 }
@@ -541,16 +542,27 @@
                     outline: none;
                     transition: border-color 0.2s;
                     max-height: 100px;
+                    cursor: text;
+                    caret-color: #333;
+                    color: #333;
+                    background-color: #fff;
                 }
 
                 .chat-input textarea:focus {
-                    border-color: #1a1a1a;
+                    border-color: #2563eb;
+                    cursor: text;
+                    caret-color: #2563eb;
+                }
+
+                .chat-input textarea::placeholder {
+                    color: #999;
+                    opacity: 1;
                 }
 
                 .send-btn {
                     width: 40px;
                     height: 40px;
-                    background: linear-gradient(135deg, #1a1a1a 0%, #000000 100%);
+                    background: linear-gradient(135deg, #2563eb, #7c3aed);
                     border: none;
                     border-radius: 50%;
                     color: white;
@@ -589,6 +601,30 @@
 
                 .loading-dot:nth-child(1) { animation-delay: -0.32s; }
                 .loading-dot:nth-child(2) { animation-delay: -0.16s; }
+
+                /* Crawling loader */
+                .crawling-loader {
+                    padding: 20px;
+                    border-bottom: 1px solid #e9ecef;
+                    background: #f8f9fa;
+                }
+
+                .crawling-status {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    gap: 12px;
+                }
+
+                .crawling-text {
+                    font-size: 14px;
+                    color: #6c757d;
+                    font-weight: 500;
+                }
+
+                .crawling-loader .loading {
+                    padding: 0;
+                }
 
                 /* Streaming cursor */
                 .streaming-cursor {
@@ -863,6 +899,50 @@
             activeStreamingTimeouts = [];
         }
         
+        // Auto-close reasoning section with smooth animation
+        function autoCloseReasoningSection(aiResponseDiv) {
+            const reasoningToggle = aiResponseDiv.querySelector('.reasoning-toggle');
+            const reasoningContent = aiResponseDiv.querySelector('.reasoning-content');
+            
+            if (reasoningToggle && reasoningContent && reasoningToggle.classList.contains('expanded')) {
+                console.log('🎯 Auto-closing reasoning section after completion');
+                
+                // Add smooth transition delay for better UX
+                setTimeout(() => {
+                    reasoningToggle.classList.remove('expanded');
+                    reasoningContent.classList.remove('expanded');
+                    
+                    // Update header text to indicate completion
+                    const reasoningTitle = reasoningToggle.querySelector('h4');
+                    if (reasoningTitle) {
+                        reasoningTitle.textContent = 'Thinking Complete';
+                    }
+                    
+                    // Smooth scroll to content after reasoning closes
+                    setTimeout(() => {
+                        smoothScrollToContent(aiResponseDiv);
+                    }, 100); // Wait for collapse animation
+                    
+                }, 200); // Wait 200ms after reasoning completes
+            }
+        }
+        
+        // Smooth scroll to show content after reasoning section closes
+        function smoothScrollToContent(aiResponseDiv) {
+            const contentSection = aiResponseDiv.querySelector('.content-section');
+            if (contentSection) {
+                console.log('📜 Smooth scrolling to content');
+                contentSection.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'start',
+                    inline: 'nearest'
+                });
+            } else {
+                // Fallback to regular scroll to bottom
+                scrollToBottom();
+            }
+        }
+        
         function streamTextWordByWord(element, fullText, onComplete) {
             const words = fullText.split(' ');
             let currentIndex = 0;
@@ -889,6 +969,11 @@
                     // Release buffered content after reasoning completes
                     if (streamingCoordinator.waitingForReasoning && streamingCoordinator.currentAiResponseDiv) {
                         releaseBufferedContent();
+                    }
+                    
+                    // Auto-close reasoning section now that streaming is complete
+                    if (streamingCoordinator.currentAiResponseDiv) {
+                        autoCloseReasoningSection(streamingCoordinator.currentAiResponseDiv);
                     }
                     
                     if (onComplete) onComplete();
@@ -966,6 +1051,9 @@
                 aiResponseDiv.appendChild(reasoningContainer);
             }
             
+            // Set current AI response div for auto-close functionality
+            streamingCoordinator.currentAiResponseDiv = aiResponseDiv;
+            
             // Get reasoning content inner div
             const reasoningContentInner = reasoningContainer?.querySelector('.reasoning-content-inner');
             if (reasoningContentInner) {
@@ -1005,6 +1093,29 @@
                     contentText.innerHTML = parseMarkdown(content);
                 }
             } else {
+                // 🎯 CONTENT IS NOW STARTING TO STREAM - TIME FOR "THINKING COMPLETE"!
+                console.log('🎯 Content starting to stream - marking thinking complete and closing reasoning!');
+                
+                // STOP any active reasoning word-by-word streaming immediately
+                clearActiveStreaming();
+                
+                // Mark reasoning as complete when content starts streaming
+                streamingCoordinator.reasoningActive = false;
+                
+                // Update reasoning header to show completion
+                const reasoningToggle = aiResponseDiv.querySelector('.reasoning-toggle h4');
+                if (reasoningToggle) {
+                    reasoningToggle.textContent = 'Thinking Complete';
+                }
+                
+                // IMMEDIATELY close reasoning section - don't wait for delays
+                const reasoningToggleElement = aiResponseDiv.querySelector('.reasoning-toggle');
+                const reasoningContent = aiResponseDiv.querySelector('.reasoning-content');
+                if (reasoningToggleElement && reasoningContent) {
+                    reasoningToggleElement.classList.remove('expanded');
+                    reasoningContent.classList.remove('expanded');
+                }
+                
                 // Create new content section and append after reasoning (if exists)
                 const contentDiv = document.createElement('div');
                 contentDiv.className = 'response-section content-section';
@@ -1329,7 +1440,11 @@
             };
             
             try {
-                const response = await fetch(config.apiUrl, {
+                // Use proxyUrl if provided, otherwise use direct apiUrl
+                const endpoint = config.proxyUrl || config.apiUrl;
+                console.log(`Using endpoint: ${endpoint} (${config.proxyUrl ? 'proxy' : 'direct'})`);
+                
+                const response = await fetch(endpoint, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -1362,9 +1477,17 @@
                     const lines = decoder.decode(value).split('\n');
                     
                     for (const line of lines) {
+                        // 🐛 DEBUG: Log every line we process
+                        if (line.trim()) {
+                            console.log('🔍 Processing line:', line.substring(0, 150) + (line.length > 150 ? '...' : ''));
+                        }
+                        
                         if (line.startsWith('data: ')) {
                             try {
                                 const chunk = JSON.parse(line.slice(6));
+                                
+                                // 🐛 DEBUG: Log every chunk type we receive
+                                console.log('📦 Received chunk:', chunk.type, chunk.step?.title || '');
                                 
                                 // 🎯 SYNCHRONIZED CHUNK PROCESSING WITH BUFFERING - NO DUPLICATION!
                                 switch (chunk.type) {
@@ -1376,8 +1499,20 @@
                                             console.log('Loader smoothly transitioned to content');
                                         }
                                         
+                                        // 🗑️ REMOVE CRAWLING LOADER when content starts
+                                        if (aiResponseContainer) {
+                                            const crawlingLoader = aiResponseContainer.querySelector('.crawling-loader');
+                                            if (crawlingLoader) {
+                                                console.log('🗑️ Removing crawling loader - content phase started');
+                                                crawlingLoader.remove();
+                                            }
+                                        }
+                                        
                                         streamData.content = chunk.full_content || chunk.text;
                                         streamData.isStreaming = true;
+                                        
+                                        // Content arrived - prepare for display
+                                        console.log('🎯 Content arrived - preparing for display');
                                         
                                         // 🎯 IF REASONING IS STILL STREAMING, ONLY BUFFER - DON'T DISPLAY!
                                         if (streamingCoordinator.reasoningActive) {
@@ -1393,6 +1528,15 @@
                                         break;
                                         
                                     case 'reasoning':
+                                        // 🐛 DEBUG: Detailed reasoning step logging
+                                        console.log('🧠 REASONING CHUNK RECEIVED:', {
+                                            hasStep: !!chunk.step,
+                                            stepTitle: chunk.step?.title,
+                                            stepNumber: chunk.step_number,
+                                            isNew: chunk.is_new,
+                                            currentReasoningCount: streamData.reasoning.length
+                                        });
+                                        
                                         if (chunk.step) {
                                             // Hide loader on first reasoning step arrival for smooth transition
                                             if (!loaderHidden) {
@@ -1401,20 +1545,73 @@
                                                 console.log('Loader smoothly transitioned to reasoning');
                                             }
                                             
+                                            // 🗑️ REMOVE CRAWLING LOADER when reasoning starts
+                                            if (aiResponseContainer) {
+                                                const crawlingLoader = aiResponseContainer.querySelector('.crawling-loader');
+                                                if (crawlingLoader) {
+                                                    console.log('🗑️ Removing crawling loader - reasoning phase started');
+                                                    crawlingLoader.remove();
+                                                }
+                                            }
+                                            
                                             streamData.reasoning.push(chunk.step);
-                                            console.log(`Added reasoning step: ${chunk.step.title}`);
+                                            console.log(`✅ Added reasoning step: ${chunk.step.title} (Total: ${streamData.reasoning.length})`);
                                             
                                             // Stream only the new step - don't rebuild everything
-                                            appendNewReasoningStep(aiResponseContainer, chunk.step, streamData.reasoning.length === 1);
+                                            try {
+                                                appendNewReasoningStep(aiResponseContainer, chunk.step, streamData.reasoning.length === 1);
+                                                console.log(`✅ Successfully processed reasoning step: ${chunk.step.title}`);
+                                            } catch (error) {
+                                                console.error('❌ Error processing reasoning step:', error, chunk.step);
+                                            }
+                                        } else {
+                                            console.warn('⚠️ Reasoning chunk missing step data:', chunk);
                                         }
                                         break;
                                         
                                     case 'crawling':
-                                        // Show crawling status (optional UI feedback)
+                                        // Show crawling status with loader
                                         console.log(`🔍 ${chunk.message}`, chunk.urls);
+                                        
+                                        // Hide main loader and show crawling loader
+                                        if (!loaderHidden) {
+                                            hideLoading();
+                                            loaderHidden = true;
+                                            console.log('Loader smoothly transitioned to crawling');
+                                        }
+                                        
+                                        // Add crawling loader to the response
+                                        if (aiResponseContainer) {
+                                            let crawlingLoader = aiResponseContainer.querySelector('.crawling-loader');
+                                            if (!crawlingLoader) {
+                                                crawlingLoader = document.createElement('div');
+                                                crawlingLoader.className = 'crawling-loader';
+                                                crawlingLoader.innerHTML = `
+                                                    <div class="crawling-status">
+                                                        <div class="loading">
+                                                            <div class="loading-dot"></div>
+                                                            <div class="loading-dot"></div>
+                                                            <div class="loading-dot"></div>
+                                                        </div>
+                                                        <div class="crawling-text">Analyzing content...</div>
+                                                    </div>
+                                                `;
+                                                aiResponseContainer.appendChild(crawlingLoader);
+                                                scrollToBottom();
+                                            }
+                                        }
                                         break;
                                         
                                     case 'completion':
+                                        // 🗑️ REMOVE CRAWLING LOADER when completion occurs (fallback)
+                                        if (aiResponseContainer) {
+                                            const crawlingLoader = aiResponseContainer.querySelector('.crawling-loader');
+                                            if (crawlingLoader) {
+                                                console.log('🗑️ Removing crawling loader - completion phase (fallback)');
+                                                crawlingLoader.remove();
+                                            }
+                                        }
+                                        
                                         streamData.content = chunk.final_content || streamData.content;
                                         streamData.sources = chunk.sources || [];
                                         streamData.isStreaming = false;

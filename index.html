@@ -428,11 +428,23 @@
     <script src="script.js"></script>
     <script src="chat-widget.js"></script>
     <script>
+        // SECURE PROXY ARCHITECTURE - Recommended for all customers
+        // This keeps your OpenAI API keys completely secure from end users
+        
         ChatWidget.init({
-            apiUrl: 'https://ask-ai-production-5ced.up.railway.app/chat',
-            urls: ['http://keshavg69.github.io/PortfolioWebsite/'],
-            companyName: 'KeshavGarg'
+            proxyUrl: '/api/chat-proxy',                                    // Uses local deployed proxy
+            urls: ['https://keshavg69.github.io/PortfolioWebsite/'],                        // Knowledge base URLs
+            companyName: 'Printify',                                       // Company name
+            autoOpen: false                                                // Auto-open setting
         });
+        
+        // HOW TO SET UP YOUR OWN SECURE PROXY:
+        // 1. Deploy chat-proxy.js to Vercel: https://vercel.com
+        // 2. Set environment variable: OPENAI_API_KEY=your-api-key
+        // 3. Replace proxyUrl above with: https://your-app.vercel.app/api/chat-proxy
+        // 4. Your API keys stay secure on your server, never visible to users!
+        
+        // See SETUP-INSTRUCTIONS.md for detailed setup guide
     </script>
   </body>
 </html>
