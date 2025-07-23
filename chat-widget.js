@@ -76,13 +76,13 @@
                 .chat-bubble {
                     width: 60px;
                     height: 60px;
-                    background: linear-gradient(135deg, #2563eb, #7c3aed);
+                    background: linear-gradient(135deg, #353535, #000000);
                     border-radius: 50%;
                     display: flex;
                     align-items: center;
                     justify-content: center;
                     cursor: pointer;
-                    box-shadow: 0 4px 20px rgba(37, 99, 235, 0.3);
+                    box-shadow: 0 4px 20px rgba(53, 53, 53, 0.3);
                     transition: all 0.3s ease;
                     position: relative;
                     overflow: hidden;
@@ -90,7 +90,7 @@
 
                 .chat-bubble:hover {
                     transform: scale(1.1);
-                    box-shadow: 0 6px 25px rgba(37, 99, 235, 0.4);
+                    box-shadow: 0 6px 25px rgba(53, 53, 53, 0.4);
                 }
 
                 .chat-bubble::before {
@@ -155,7 +155,7 @@
 
                 /* Chat header */
                 .chat-header {
-                    background: linear-gradient(135deg, #2563eb, #7c3aed);
+                    background: linear-gradient(135deg, #353535, #000000);
                     color: white;
                     padding: 20px;
                     display: flex;
@@ -412,7 +412,7 @@
 
                 .source-link {
                     display: block;
-                    color: #0066cc;
+                    color: #353535;
                     text-decoration: none;
                     margin-bottom: 8px;
                     font-size: 13px;
@@ -420,6 +420,7 @@
                 }
 
                 .source-link:hover {
+                    color: #000000;
                     text-decoration: underline;
                 }
 
@@ -549,9 +550,9 @@
                 }
 
                 .chat-input textarea:focus {
-                    border-color: #2563eb;
+                    border-color: #353535;
                     cursor: text;
-                    caret-color: #2563eb;
+                    caret-color: #353535;
                 }
 
                 .chat-input textarea::placeholder {
@@ -562,7 +563,7 @@
                 .send-btn {
                     width: 40px;
                     height: 40px;
-                    background: linear-gradient(135deg, #2563eb, #7c3aed);
+                    background: linear-gradient(135deg, #353535, #000000);
                     border: none;
                     border-radius: 50%;
                     color: white;
