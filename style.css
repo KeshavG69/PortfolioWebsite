@@ -380,6 +380,152 @@ article .icon {
   border-color: rgb(163, 163, 163);
 }
 
+/* ENHANCED PROJECT CARDS */
+
+.enhanced-project-card {
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  min-height: 550px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.enhanced-project-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.project-header {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1rem;
+}
+
+.project-status-badge {
+  padding: 0.4rem 0.8rem;
+  border-radius: 1rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.project-status-badge.live {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+}
+
+.project-status-badge.demo {
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  color: white;
+}
+
+.project-status-badge.github {
+  background: linear-gradient(135deg, #6b7280, #374151);
+  color: white;
+}
+
+.project-description {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: rgb(85, 85, 85);
+  margin: 1rem 0;
+  text-align: left;
+  flex-grow: 1;
+}
+
+.tech-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1rem 0;
+  justify-content: center;
+}
+
+.tech-badge {
+  background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+  color: #374151;
+  padding: 0.3rem 0.6rem;
+  border-radius: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border: 1px solid #d1d5db;
+  transition: all 0.2s ease;
+}
+
+.tech-badge:hover {
+  background: linear-gradient(135deg, #e5e7eb, #d1d5db);
+  transform: translateY(-1px);
+}
+
+.project-metric {
+  text-align: center;
+  margin: 1rem 0;
+  padding: 1rem;
+  background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+  border-radius: 1rem;
+  border: 1px solid #d1d5db;
+}
+
+.metric-value {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #374151;
+  display: block;
+}
+
+.metric-label {
+  font-size: 0.8rem;
+  color: #6b7280;
+  margin-top: 0.2rem;
+  display: block;
+}
+
+.enhanced-project-card .btn-container {
+  margin-top: auto;
+  padding-top: 1rem;
+}
+
+.enhanced-project-card .project-btn {
+  font-size: 0.9rem;
+  padding: 0.8rem 1.5rem;
+  margin: 0.2rem;
+  border-radius: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.enhanced-project-card .project-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* RESPONSIVE DESIGN FOR ENHANCED CARDS */
+
+@media (max-width: 768px) {
+  .enhanced-project-card {
+    min-height: auto;
+    margin-bottom: 2rem;
+  }
+  
+  .tech-stack {
+    justify-content: center;
+  }
+  
+  .project-description {
+    text-align: center;
+  }
+  
+  .enhanced-project-card .btn-container {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .enhanced-project-card .project-btn {
+    width: 100%;
+  }
+}
+
 /* CONTACT */
 
 #contact {
