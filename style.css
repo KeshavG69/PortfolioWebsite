@@ -493,11 +493,37 @@ article .icon {
   margin: 0.2rem;
   border-radius: 1.5rem;
   transition: all 0.3s ease;
+  font-weight: 600;
 }
 
 .enhanced-project-card .project-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Enhanced Project Card Button Overrides for Better Contrast */
+.enhanced-project-card .btn-color-1 {
+  background: #000000;
+  color: white;
+  border: #000000 0.1rem solid;
+}
+
+.enhanced-project-card .btn-color-1:hover {
+  background: #333333;
+  border: #333333 0.1rem solid;
+  color: white;
+}
+
+.enhanced-project-card .btn-color-2 {
+  background: white;
+  color: #000000;
+  border: #000000 0.1rem solid;
+}
+
+.enhanced-project-card .btn-color-2:hover {
+  background: #f3f4f6;
+  border: #000000 0.1rem solid;
+  color: #000000;
 }
 
 /* RESPONSIVE DESIGN FOR ENHANCED CARDS */
