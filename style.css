@@ -324,13 +324,27 @@ section {
   color: rgb(85, 85, 85);
   font-weight: 600;
   font-size: 1.75rem;
-  margin-bottom: 2rem;
+  margin-bottom: 0.5rem;
 }
 
 .experience-details-container {
   display: flex;
   justify-content: center;
   flex-direction: column;
+}
+
+.experience-details-container .details-container {
+  padding: 2rem;
+}
+
+.experience-details-container .details-container p {
+  margin-bottom: 0.75rem;
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+.experience-details-container .details-container > div {
+  margin-top: 1.5rem;
 }
 
 .article-container {
