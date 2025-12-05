@@ -1,6 +1,6 @@
 @media screen and (max-width: 1400px) {
   #profile {
-    height: 83vh;
+    min-height: 60vh;
     margin-bottom: 6rem;
   }
   .about-containers {
@@ -45,15 +45,20 @@
   .about-containers {
     margin-top: 0;
   }
+  
+  /* Testimonials responsive */
+  .testimonial-card {
+    max-width: 100%;
+  }
 }
 
 @media screen and (max-width: 600px) {
   #contact,
   footer {
-    height: 40vh;
+    height: fit-content;
   }
   #profile {
-    height: 83vh;
+    min-height: 50vh;
     margin-bottom: 0;
   }
   article {
@@ -99,5 +104,49 @@
   }
   .text-container {
     text-align: justify;
+  }
+  
+  /* Testimonials mobile */
+  .testimonial-card {
+    padding: 1.5rem;
+  }
+  .testimonial-text {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+  .quote-icon {
+    font-size: 3rem;
+    top: -0.5rem;
+  }
+  
+  /* Services cards mobile */
+  .services-details-container .details-container {
+    min-width: 100%;
+    max-width: 100%;
+  }
+  
+  /* Timeline mobile */
+  .experience-details-container.timeline::after {
+    left: 15px;
+  }
+  .timeline-dot {
+    left: 7px;
+  }
+  .timeline-item {
+    padding: 10px 20px 10px 35px;
+  }
+  
+  /* Contact mobile */
+  .contact-info-upper-container {
+    flex-direction: column;
+    padding: 1rem;
+  }
+  .contact-info-container {
+    padding: 0.5rem;
+  }
+  
+  /* Reduce animation on mobile for performance */
+  .animate-on-scroll {
+    transition: opacity 0.4s ease-out, transform 0.4s ease-out;
   }
 }

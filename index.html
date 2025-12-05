@@ -15,6 +15,7 @@
         <ul class="nav-links">
           <li><a href="#about">About</a></li>
           <li><a href="#experience">Experience</a></li>
+          <li><a href="#services">Services</a></li>
           <li><a href="#projects">Projects</a></li>
           <li><a href="#contact">Contact</a></li>
         </ul>
@@ -31,6 +32,7 @@
         <div class="menu-links">
           <li><a href="#about" onclick="toggleMenu()">About</a></li>
           <li><a href="#experience" onclick="toggleMenu()">Experience</a></li>
+          <li><a href="#services" onclick="toggleMenu()">Services</a></li>
           <li><a href="#projects" onclick="toggleMenu()">Projects</a></li>
           <li><a href="#contact" onclick="toggleMenu()">Contact</a></li>
         </div>
@@ -43,7 +45,7 @@
       <div class="section__text">
         <p class="section__text__p1">Hello, I'm</p>
         <h1 class="title">Keshav Garg</h1>
-        <p class="section__text__p2">AI Engineer</p>
+        <p class="section__text__p2">AI Engineer & Consultant</p>
         <div class="btn-container">
           <button
             class="btn btn-color-2"
@@ -52,7 +54,7 @@
             Download CV
           </button>
           <button class="btn btn-color-1" onclick="location.href='./#contact'">
-            Contact Info
+            Hire Me
           </button>
         </div>
         <div id="socials-container">
@@ -75,7 +77,7 @@
       <!-- <p class="section__text__p1">Get To Know More</p> -->
       <h1 class="title">About Me</h1>
       <div class="section-container">
-        <div class="section__pic-container">
+        <div class="section__pic-container" style="display: none;">
           <img
             src="./assets/about-pic.png"
             alt="Profile picture"
@@ -83,8 +85,8 @@
           />
         </div>
         <div class="about-details-container">
-          <div class="about-containers">
-            <div class="details-container">
+          <div class="about-containers bento-grid">
+            <div class="details-container bento-card">
               <img
                 src="./assets/experience.png"
                 alt="Experience icon"
@@ -93,20 +95,28 @@
               <h3>Experience</h3>
               <p>1+ Years<br />AI Engineering</p>
             </div>
-            <div class="details-container">
+            <div class="details-container bento-card">
               <img
                 src="./assets/education.png"
                 alt="Education icon"
                 class="icon"
               />
               <h3>Education</h3>
-              <p>B.Tech Bachelors Degree<br />(2021-2025)</p>
-              
+              <p>B.Tech CS<br />(2021-2025)</p>
+            </div>
+            <div class="details-container bento-card">
+              <img
+                src="./assets/checkmark.png" 
+                alt="Availability icon"
+                class="icon"
+              />
+              <h3>Availability</h3>
+              <p>Open for<br />Contracts</p>
             </div>
           </div>
           <div class="text-container">
             <p>
-              Hi, I'm Keshav Garg, a passionate AI Engineer with over a year of professional experience in building enterprise-grade AI solutions. Currently working at Kroolo, I specialize in Multi-Agent Systems, Large Language Models (LLMs), and Retrieval-Augmented Generation (RAG) architectures. I've architected enterprise search systems, built 250+ integrated AI tools, and engineered multimodal AI systems with 97% accuracy. I hold a B.Tech in Computer Science from Amity University, Noida, and have successfully delivered innovative AI projects that have transformed business operations.
+              Hi, I'm Keshav Garg, a passionate AI Engineer and Consultant with over a year of professional experience in building enterprise-grade AI solutions. I specialize in helping businesses leverage Multi-Agent Systems, Large Language Models (LLMs), and Retrieval-Augmented Generation (RAG) architectures to solve complex problems. Currently available for contract work, I've architected enterprise search systems, built 250+ integrated AI tools, and engineered multimodal AI systems with 97% accuracy. I hold a B.Tech in Computer Science from Amity University, Noida, and have successfully delivered innovative AI projects for clients ranging from startups to established enterprises.
             </p>
           </div>
         </div>
@@ -121,22 +131,12 @@
     <section id="experience">
       <p class="section__text__p1">Explore My</p>
       <h1 class="title">Experience</h1>
-      <div class="experience-details-container">
-        <div class="about-containers">
-          <div class="details-container">
-            <h2 class="experience-sub-title">AI Engineer</h2>
-            <h3 style="margin-top: 1rem; color: #353535;">Kroolo • Apr 2025 - Present</h3>
-            <div style="text-align: left; margin-top: 1rem;">
-              <p>• Architected and built a complete Enterprise Search system from the ground up, managing the full backend lifecycle—from data ingestion and preprocessing to a search pipeline using traditional machine learning methods—achieving performance comparable to an industry leader</p>
-              <p>• Revamped Chat with Anything module using advanced text extraction algorithms, reducing processing latency by 50%</p>
-              <p>• Rebuilt AI agent ecosystem with 250+ integrated tools, transforming prompt-engineered agents into sophisticated agentic systems</p>
-              <p>• Led technical design reviews and managed full project lifecycle from requirements to production deployment</p>
-              <p>• Delivered comprehensive system documentation for enterprise-grade AI agent platform</p>
-            </div>
-          </div>
-          <div class="details-container">
-            <h2 class="experience-sub-title">AI Engineer</h2>
-            <h3 style="margin-top: 1rem; color: #353535;">GenAI Protos • Nov 2024 - Apr 2025</h3>
+      <div class="experience-details-container timeline">
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="details-container timeline-content">
+            <h2 class="experience-sub-title">Contract AI Engineer</h2>
+            <h3 style="margin-top: 0.5rem; color: #6b7280; font-size: 0.9rem;">GenAI Protos • Nov 2024 - Present</h3>
             <div style="text-align: left; margin-top: 1rem;">
               <p>• Engineered multimodal Deep Research Multi-Agent System with 97% accuracy for fact-checking and misinformation detection</p>
               <p>• Developed NLP2SQL system using RAG architecture, achieving 98% query accuracy with automated chart generation, deployed via WhatsApp</p>
@@ -145,43 +145,137 @@
             </div>
           </div>
         </div>
-        <div class="about-containers" style="margin-top: 2rem;">
-          <div class="details-container">
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="details-container timeline-content">
+            <h2 class="experience-sub-title">AI Engineer</h2>
+            <h3 style="margin-top: 0.5rem; color: #6b7280; font-size: 0.9rem;">Kroolo • Apr 2025 - Present</h3>
+            <div style="text-align: left; margin-top: 1rem;">
+              <p>• Architected and built a complete Enterprise Search system from the ground up, managing the full backend lifecycle—from data ingestion and preprocessing to a search pipeline using traditional machine learning methods—achieving performance comparable to an industry leader</p>
+              <p>• Revamped Chat with Anything module using advanced text extraction algorithms, reducing processing latency by 50%</p>
+              <p>• Rebuilt AI agent ecosystem with 250+ integrated tools, transforming prompt-engineered agents into sophisticated agentic systems</p>
+              <p>• Led technical design reviews and managed full project lifecycle from requirements to production deployment</p>
+              <p>• Delivered comprehensive system documentation for enterprise-grade AI agent platform</p>
+            </div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="details-container timeline-content">
             <h2 class="experience-sub-title">AI/ML Intern</h2>
-            <h3 style="margin-top: 1rem; color: #353535;">Agnisys Technology • May 2024 - July 2024</h3>
+            <h3 style="margin-top: 0.5rem; color: #6b7280; font-size: 0.9rem;">Agnisys Technology • May 2024 - July 2024</h3>
             <div style="text-align: left; margin-top: 1rem;">
               <p>• Implemented a Retrieval-Augmented Generation (RAG) pipeline, significantly improving data retrieval accuracy and contextual response generation</p>
               <p>• Created automated dashboard using user behavior data, eliminating manual data entry and reducing processing time</p>
               <p>• Collaborated with cross-functional teams to deliver scalable, high-impact solutions, improving project outcomes and client satisfaction</p>
             </div>
           </div>
+        </div>
+      </div>  
+        <!-- Skills Marquee -->
+        <div class="skills-marquee-container">
+          <h2 class="experience-sub-title" style="text-align: center; margin-bottom: 2rem;">Technical Arsenal</h2>
+          <div class="skills-marquee">
+            <div class="marquee-content">
+              <span>LLMs & RAG</span>
+              <span>Multi-Agent Systems</span>
+              <span>LangChain</span>
+              <span>LangGraph</span>
+              <span>PyTorch</span>
+              <span>FastAPI</span>
+              <span>AWS</span>
+              <span>Python</span>
+              <span>SQL</span>
+
+              <span>Docker</span>
+              <span>Kubernetes</span>
+              <span>Git</span>
+              <span>Railway Deployment</span>
+              <span>LLMOps</span>
+              <!-- Duplicate for seamless loop -->
+              <span>LLMs & RAG</span>
+              <span>Multi-Agent Systems</span>
+              <span>LangChain</span>
+              <span>LangGraph</span>
+              <span>PyTorch</span>
+              <span>FastAPI</span>
+              <span>AWS</span>
+              <span>Python</span>
+              <span>SQL</span>
+
+              <span>Docker</span>
+              <span>Kubernetes</span>
+              <span>Git</span>
+              <span>Railway Deployment</span>
+              <span>LLMOps</span>
+              <!-- Triplicate for wide screens -->
+              <span>LLMs & RAG</span>
+              <span>Multi-Agent Systems</span>
+              <span>LangChain</span>
+              <span>LangGraph</span>
+              <span>PyTorch</span>
+              <span>FastAPI</span>
+              <span>AWS</span>
+              <span>Python</span>
+              <span>SQL</span>
+
+              <span>Docker</span>
+              <span>Kubernetes</span>
+              <span>Git</span>
+              <span>Railway Deployment</span>
+              <span>LLMOps</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <img
+        src="./assets/arrow.png"
+        alt="Arrow icon"
+        class="icon arrow"
+        onclick="location.href='./#projects'"
+      />
+    </section>
+    <section id="services">
+      <p class="section__text__p1">What I Offer</p>
+      <h1 class="title">Services</h1>
+      <div class="services-details-container">
+        <div class="about-containers">
           <div class="details-container">
-            <h2 class="experience-sub-title">Technical Skills</h2>
-            <div class="article-container">
-              <article>
-                <img src="./assets/checkmark.png" alt="Experience icon" class="icon" />
-                <div><h3>LLMs & RAG</h3><p>Advanced</p></div>
-              </article>
-              <article>
-                <img src="./assets/checkmark.png" alt="Experience icon" class="icon" />
-                <div><h3>Multi-Agent Systems</h3><p>Advanced</p></div>
-              </article>
-              <article>
-                <img src="./assets/checkmark.png" alt="Experience icon" class="icon" />
-                <div><h3>LangChain & LangGraph</h3><p>Experienced</p></div>
-              </article>
-              <article>
-                <img src="./assets/checkmark.png" alt="Experience icon" class="icon" />
-                <div><h3>PyTorch & Fine-tuning</h3><p>Experienced</p></div>
-              </article>
-              <article>
-                <img src="./assets/checkmark.png" alt="Experience icon" class="icon" />
-                <div><h3>FastAPI & AWS</h3><p>Intermediate</p></div>
-              </article>
-              <article>
-                <img src="./assets/checkmark.png" alt="Experience icon" class="icon" />
-                <div><h3>Python & SQL</h3><p>Advanced</p></div>
-              </article>
+            <h2 class="experience-sub-title">AI/ML Development</h2>
+            <p>Building sophisticated Agentic Workflows, RAG systems, and autonomous agents using LangChain, LangGraph, and state-of-the-art LLMs.</p>
+          </div>
+          <div class="details-container">
+            <h2 class="experience-sub-title">Full-Stack Development</h2>
+            <p>End-to-end web application development  integrated with AI capabilities.</p>
+          </div>
+          <div class="details-container">
+            <h2 class="experience-sub-title">Consulting</h2>
+            <p>Strategic AI advisory, architecture design, and proof-of-concept development to validate your AI ideas.</p>
+          </div>
+        </div>
+      </div>
+      <img
+        src="./assets/arrow.png"
+        alt="Arrow icon"
+        class="icon arrow"
+        onclick="location.href='./#testimonials'"
+      />
+    </section>
+    <section id="testimonials">
+      <p class="section__text__p1">What Clients Say</p>
+      <h1 class="title">Testimonials</h1>
+      <div class="testimonials-container">
+        <div class="testimonial-card">
+          <div class="testimonial-content">
+            <div class="quote-icon">"</div>
+            <p class="testimonial-text">
+              The AI solution transformed our entire RFP process. What used to be 100% manual work is now only 5% manual. The expertise in agentic workflows and document generation saved us countless hours and significantly improved our proposal quality.
+            </p>
+          </div>
+          <div class="testimonial-author">
+            <div class="author-info">
+              <h4>Government RFP Client</h4>
+              <p>Contract Project</p>
             </div>
           </div>
         </div>
@@ -199,14 +293,28 @@
       <div class="experience-details-container">
         <div class="about-containers">
           
+          <!-- Government RFP Generator -->
+          <div class="details-container color-container enhanced-project-card">
+            <h2 class="experience-sub-title project-title">Govt RFP Document Generator</h2>
+            <p class="project-description">
+              Automated document generation system for government RFP bidding. Generates compliant proposal documents by analyzing RFP requirements and company data, streamlining the bidding process for contractors.
+            </p>
+            <div class="tech-stack">
+              <span class="tech-badge">Agentic Workflows</span>
+              <span class="tech-badge">RAG</span>
+              <span class="tech-badge">LLMs</span>
+              <span class="tech-badge">Python</span>
+              <span class="tech-badge">Doc Generation</span>
+            </div>
+            <div class="project-metric">
+              <span class="metric-value">Automated</span>
+              <span class="metric-label">proposal creation</span>
+            </div>
+          </div>
+          
           <!-- Ra.One - Flagship AI Project -->
           <div class="details-container color-container enhanced-project-card">
-            <div class="project-header">
-              <span class="project-status-badge github">GitHub</span>
-            </div>
-            <div class="article-container">
-              <img src="./assets/project-4.png" alt="Ra.One WhatsApp Assistant" class="project-img" />
-            </div>
+            <!-- Image removed -->
             <h2 class="experience-sub-title project-title">Ra.One</h2>
             <p class="project-description">
               Human-like AI WhatsApp assistant with dual-memory architecture using PostgreSQL and Pinecone for real-time, context-aware conversations with multimodal inputs.
@@ -222,21 +330,12 @@
               <span class="metric-value">Real-time</span>
               <span class="metric-label">conversational AI with memory</span>
             </div>
-            <div class="btn-container">
-              <button class="btn btn-color-1 project-btn" onclick="location.href='https://github.com/KeshavG69/RaOne'">
-                GitHub
-              </button>
-            </div>
+
           </div>
 
           <!-- Enterprise Support Automation -->
           <div class="details-container color-container enhanced-project-card">
-            <div class="project-header">
-              <span class="project-status-badge demo">Demo</span>
-            </div>
-            <div class="article-container">
-              <img src="./assets/project-5.png" alt="Enterprise Support Automation" class="project-img" />
-            </div>
+            <!-- Image removed -->
             <h2 class="experience-sub-title project-title">Enterprise Support Automation</h2>
             <p class="project-description">
               Autonomous AI support agent with web scraping pipeline using Selenium to extract help articles, featuring LLM-powered search, generation, and verification tools.
@@ -252,14 +351,7 @@
               <span class="metric-value">80%</span>
               <span class="metric-label">reduction in manual workload</span>
             </div>
-            <div class="btn-container">
-              <button class="btn btn-color-1 project-btn" onclick="location.href='https://doodash.streamlit.app'">
-                Demo
-              </button>
-              <button class="btn btn-color-2 project-btn" onclick="location.href='https://github.com/KeshavG69'">
-                GitHub
-              </button>
-            </div>
+
           </div>
 
         </div>
@@ -268,12 +360,7 @@
           
           <!-- LegalInsight -->
           <div class="details-container color-container enhanced-project-card">
-            <div class="project-header">
-              <span class="project-status-badge demo">Demo</span>
-            </div>
-            <div class="article-container">
-              <img src="./assets/project-1.jpeg" alt="LegalInsight" class="project-img" />
-            </div>
+            <!-- Image removed -->
             <h2 class="experience-sub-title project-title">LegalInsight</h2>
             <p class="project-description">
               Legal document analysis platform using RAPTOR for hierarchical document understanding and automated PDF summarization with interactive "Chat with PDF" functionality.
@@ -289,44 +376,7 @@
               <span class="metric-value">70%</span>
               <span class="metric-label">reduction in document review time</span>
             </div>
-            <div class="btn-container">
-              <button class="btn btn-color-1 project-btn" onclick="location.href='http://legal-insight.streamlit.app'">
-                Demo
-              </button>
-              <button class="btn btn-color-2 project-btn" onclick="location.href='https://github.com/KeshavG69'">
-                GitHub
-              </button>
-            </div>
-          </div>
 
-          <!-- VividVision -->
-          <div class="details-container color-container enhanced-project-card">
-            <div class="project-header">
-              <span class="project-status-badge github">GitHub</span>
-            </div>
-            <div class="article-container">
-              <img src="./assets/project-3.png" alt="VividVision Video Colorization" class="project-img" />
-            </div>
-            <h2 class="experience-sub-title project-title">VividVision</h2>
-            <p class="project-description">
-              Video colorization pipeline using deep learning models for automatic colorization of black and white videos, featuring advanced neural network architectures and optimized processing workflows.
-            </p>
-            <div class="tech-stack">
-              <span class="tech-badge">Python</span>
-              <span class="tech-badge">OpenCV</span>
-              <span class="tech-badge">PyTorch</span>
-              <span class="tech-badge">Video Processing</span>
-              <span class="tech-badge">Deep Learning</span>
-            </div>
-            <div class="project-metric">
-              <span class="metric-value">Automated</span>
-              <span class="metric-label">video colorization pipeline</span>
-            </div>
-            <div class="btn-container">
-              <button class="btn btn-color-1 project-btn" onclick="location.href='https://github.com/KeshavG69/VividVision'">
-                GitHub
-              </button>
-            </div>
           </div>
 
         </div>
@@ -341,6 +391,7 @@
     <section id="contact">
       <p class="section__text__p1">Get in Touch</p>
       <h1 class="title">Contact Me</h1>
+      <p style="text-align: center; margin-bottom: 2rem;">Open to Contract Work & Freelance Projects</p>
       <div class="contact-info-upper-container">
         <div class="contact-info-container">
           <img
@@ -348,7 +399,7 @@
             alt="Email icon"
             class="icon contact-icon email-icon"
           />
-          <p><a href="mailto:gargkeshav504@gmail.com">gargkeshav504@gmail.com</a></p>
+          <p><a href="mailto:gargkeshav504@gmail.com?subject=Hello%20Keshav%20-%20Project%20Inquiry&amp;body=Hey%20Keshav%2C%0A%0AI%20came%20across%20your%20portfolio%20and%20would%20love%20to%20discuss%20a%20potential%20project%20with%20you.%0A%0A">gargkeshav504@gmail.com</a></p>
         </div>
         <div class="contact-info-container">
           <img
@@ -378,6 +429,7 @@
           <ul class="nav-links">
             <li><a href="#about">About</a></li>
             <li><a href="#experience">Experience</a></li>
+            <li><a href="#services">Services</a></li>
             <li><a href="#projects">Projects</a></li>
             <li><a href="#contact">Contact</a></li>
           </ul>
@@ -385,7 +437,7 @@
       </nav>
       <p>Copyright &#169; 2025 Keshav Garg. All Rights Reserved.</p>
     </footer>
-    <script src="script.js"></script>
+    <!-- <script src="script.js"></script>
     <script src="chat-widget.js"></script>
     <script>
         // SECURE PROXY ARCHITECTURE - Recommended for all customers
@@ -405,6 +457,6 @@
         // 4. Your API keys stay secure on your server, never visible to users!
         
         // See SETUP-INSTRUCTIONS.md for detailed setup guide
-    </script>
+    </script> -->
   </body>
 </html>
