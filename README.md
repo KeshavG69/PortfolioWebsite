@@ -1,55 +1,36 @@
-# Keshav Garg's Portfolio Website
-Keshav Garg
-Welcome to the repository for my personal portfolio website! This website showcases my skills, projects, and professional journey in the field of Computer Science and Engineering, with a focus on AI/ML.
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-🌐 **Website Link**
+## Getting Started
 
-You can view the live portfolio website at: [https://keshavg69.github.io/PortfolioWebsite/](https://keshavg69.github.io/PortfolioWebsite/)
+First, run the development server:
 
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
+```
 
-📂 **Project Structure**
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-This repository contains the code for my portfolio website. The structure is organized as follows:
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-PortfolioWebsite/
-├── index.html # Main HTML file
-├── css/
-│ ├── style.css # Main CSS file
-├── js/
-│ ├── script.js # JavaScript file for interactivity
-└── assets/
-└── ... # Images used in the website
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Learn More
 
-🚀 **Getting Started**
+To learn more about Next.js, take a look at the following resources:
 
-To get a local copy of the project, follow these steps:
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-1. Clone the repository:
-    ```bash
-    git clone https://github.com/KeshavG69/PortfolioWebsite.git
-    ```
-2. Navigate to the project directory:
-    ```bash
-    cd PortfolioWebsite
-    ```
-3. Open `index.html` in your web browser to view the website locally.
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-🛠️ **Technologies Used**
+## Deploy on Vercel
 
-- HTML
-- CSS
-- JavaScript
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-📄 **License**
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-📬 **Contact**
-
-Feel free to reach out to me via:
-
-- LinkedIn
-- Email: gargkeshav504@gmail.com
-
-Thank you for visiting my portfolio!
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
