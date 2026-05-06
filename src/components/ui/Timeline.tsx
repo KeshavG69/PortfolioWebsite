@@ -1,10 +1,20 @@
 import * as React from "react"
 import { cn } from "@/lib/utils"
 
+/**
+ * TimelineItem — clean two-column experience entry.
+ *   • Date column (small, mono, aligned right on desktop)
+ *   • Content column with role + company + bullets
+ *   • A single hairline divider rather than the previous decorative dot+line
+ *   • No "//" prefixes — let the typography do the work
+ */
+
 interface TimelineItemProps extends React.HTMLAttributes<HTMLDivElement> {
   role: string
   company: string
   date: string
+  location?: string
+  type?: string                 // e.g. "Contract", "Full-time"
   points: string[]
 }
 
@@ -12,61 +22,53 @@ export function TimelineItem({
   role,
   company,
   date,
+  location,
+  type,
   points,
   className,
   ...props
 }: TimelineItemProps) {
   return (
-    <div className={cn("relative pl-8 md:pl-0", className)} {...props}>
-      {/* Desktop layout: Left (Date/Company), Middle (Line/Dot), Right (Content) */}
-      <div className="hidden md:grid md:grid-cols-[1fr_auto_1fr] md:gap-8 lg:gap-16">
-        
-        {/* Left side */}
-        <div className="flex flex-col items-end text-right pt-1">
-          <h3 className="text-xl font-bold uppercase">{role}</h3>
-          <span className="text-neo-accent font-mono mt-1">{company}</span>
-          <span className="text-sm text-neo-muted font-mono mt-2">{date}</span>
-        </div>
-
-        {/* Center Line & Dot */}
-        <div className="relative flex flex-col items-center">
-          <div className="h-full w-px bg-neo-border absolute top-0 bottom-0" />
-          <div className="w-4 h-4 rounded-none bg-neo-bg border-2 border-neo-accent z-10 mt-2" />
-        </div>
-
-        {/* Right side */}
-        <div className="flex flex-col gap-3 pb-16">
-          {points.map((point, i) => (
-            <p key={i} className="text-sm md:text-base leading-relaxed text-neo-fg/80">
-              <span className="text-neo-accent mr-2">{"//"}</span>
-              {point}
-            </p>
-          ))}
-        </div>
+    <div
+      className={cn(
+        "grid grid-cols-1 md:grid-cols-[160px_1fr] gap-4 md:gap-12 py-8 md:py-10",
+        "border-t border-[var(--color-border)]",
+        className
+      )}
+      {...props}
+    >
+      {/* Left column — date + location */}
+      <div className="flex flex-col gap-1">
+        <span className="font-mono text-xs text-[var(--color-fg-muted)] tabular-nums">
+          {date}
+        </span>
+        {location && (
+          <span className="font-mono text-xs text-[var(--color-fg-subtle)]">
+            {location}
+          </span>
+        )}
+        {type && (
+          <span className="label mt-2">{type}</span>
+        )}
       </div>
 
-      {/* Mobile layout */}
-      <div className="md:hidden flex flex-col pb-12">
-        <div className="absolute left-0 top-2 bottom-0 w-px bg-neo-border" />
-        <div className="absolute left-[-5px] top-3 w-3 h-3 bg-neo-bg border-2 border-neo-accent z-10" />
-        
-        <div className="mb-4">
-          <h3 className="text-xl font-bold uppercase">{role}</h3>
-          <div className="flex flex-wrap gap-2 items-center mt-1 font-mono text-sm">
-             <span className="text-neo-accent">{company}</span>
-             <span className="text-neo-muted hidden sm:inline">|</span>
-             <span className="text-neo-muted">{date}</span>
-          </div>
-        </div>
+      {/* Right column — role / company / bullets */}
+      <div>
+        <h3 className="text-lg md:text-xl font-semibold text-[var(--color-fg)] tracking-tight">
+          {role}
+          <span className="text-[var(--color-fg-muted)] font-normal"> · {company}</span>
+        </h3>
 
-        <div className="flex flex-col gap-3">
+        <ul className="mt-4 space-y-2.5">
           {points.map((point, i) => (
-            <p key={i} className="text-sm leading-relaxed text-neo-fg/80">
-              <span className="text-neo-accent mr-2">{"//"}</span>
+            <li
+              key={i}
+              className="text-[15px] leading-relaxed text-[var(--color-fg-muted)] pl-4 relative before:content-[''] before:absolute before:left-0 before:top-[0.65em] before:w-1 before:h-1 before:rounded-full before:bg-[var(--color-fg-subtle)]"
+            >
               {point}
-            </p>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </div>
   )

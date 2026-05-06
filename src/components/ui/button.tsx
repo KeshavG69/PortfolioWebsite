@@ -4,23 +4,49 @@ import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
 
+/**
+ * Button — refined per Emil's framework:
+ *   • transition only the properties that actually change (no `transition: all`)
+ *   • custom ease-out curve instead of weak built-in easings
+ *   • scale(0.97) on :active so the press feels real
+ *   • durations under 200ms — buttons are pressed hundreds of times
+ */
 const buttonVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-neo-accent disabled:pointer-events-none disabled:opacity-50",
+  [
+    "inline-flex items-center justify-center gap-2 whitespace-nowrap",
+    "text-sm font-medium",
+    "rounded-md",
+    "select-none cursor-pointer",
+    "transition-[background-color,border-color,color,transform]",
+    "[transition-duration:160ms]",
+    "[transition-timing-function:var(--ease-out)]",
+    "active:scale-[0.97]",
+    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg)]",
+    "disabled:pointer-events-none disabled:opacity-50",
+  ].join(" "),
   {
     variants: {
       variant: {
-        default: "bg-neo-fg text-neo-bg hover:bg-neo-accent hover:text-white neo-border shadow-[4px_4px_0_0_#FF4500] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all active:shadow-none active:translate-x-[4px] active:translate-y-[4px]",
-        destructive: "bg-red-500 text-white hover:bg-red-500/90 neo-border",
-        outline: "border border-neo-border bg-transparent hover:bg-neo-border text-neo-fg shadow-[4px_4px_0_0_#FF4500] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all",
-        secondary: "bg-neo-border text-neo-fg hover:bg-neo-border/80 neo-border",
-        ghost: "hover:bg-neo-border hover:text-neo-fg",
-        link: "text-neo-fg underline-offset-4 hover:underline",
+        // Primary — high-contrast accent.
+        default:
+          "bg-[var(--color-accent)] text-[#0A0A0B] hover:bg-[#FF7A45]",
+        // Secondary — quiet but legible.
+        outline:
+          "border border-[var(--color-border)] bg-transparent text-[var(--color-fg)] hover:bg-[var(--color-bg-elevated)] hover:border-[var(--color-border-hover)]",
+        ghost:
+          "text-[var(--color-fg)] hover:bg-[var(--color-bg-elevated)]",
+        link:
+          "text-[var(--color-accent)] underline-offset-4 hover:underline px-0 h-auto",
+        destructive:
+          "bg-red-600 text-white hover:bg-red-500",
+        secondary:
+          "bg-[var(--color-bg-elevated)] text-[var(--color-fg)] hover:bg-[var(--color-bg-overlay)] border border-[var(--color-border)]",
       },
       size: {
-        default: "h-12 px-6 py-2",
-        sm: "h-9 rounded-md px-3 text-xs",
-        lg: "h-14 rounded-md px-8",
-        icon: "h-12 w-12",
+        default: "h-10 px-4",
+        sm: "h-8 px-3 text-xs",
+        lg: "h-12 px-6 text-base",
+        icon: "h-10 w-10",
       },
     },
     defaultVariants: {

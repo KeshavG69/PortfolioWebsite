@@ -5,16 +5,25 @@ import "./globals.css";
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
   subsets: ["latin"],
+  display: "swap",
 });
 
 const jetbrainsMono = JetBrains_Mono({
   variable: "--font-jetbrains-mono",
   subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Keshav Garg | AI/ML Engineer & Consultant",
-  description: "AI Engineer specializing in Multi-Agent Systems, RAG, and LLMs. Building production-grade intelligent systems.",
+  title: "Keshav Garg — AI Engineer",
+  description:
+    "Independent AI engineer building production-grade multi-agent systems, RAG pipelines, and voice agents for enterprise clients.",
+  openGraph: {
+    title: "Keshav Garg — AI Engineer",
+    description:
+      "Production-grade AI systems. Multi-agent workflows, RAG, voice agents.",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
@@ -23,9 +32,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark scroll-smooth">
+    <html lang="en" className="scroll-smooth">
       <body
-        className={`${spaceGrotesk.variable} ${jetbrainsMono.variable} antialiased selection:bg-orange-500 selection:text-black`}
+        className={`${spaceGrotesk.variable} ${jetbrainsMono.variable} antialiased`}
       >
         {children}
       </body>
