@@ -5,6 +5,7 @@ import { TimelineItem } from "@/components/ui/Timeline"
 import { MotionWrapper, MotionStaggerGroup } from "@/components/ui/MotionWrapper"
 import { ContactFormDialog } from "@/components/ui/ContactForm"
 import Link from "next/link"
+import Image from "next/image"
 import { ArrowUpRight } from "lucide-react"
 
 // ─────────────────────────────────────────────────────────────────
@@ -180,41 +181,59 @@ export default function Home() {
         {/* ───── Hero ───── */}
         <Section className="border-b border-[var(--color-border)] py-20 md:py-32 lg:py-40">
           <Container>
-            <MotionWrapper variant="fadeUp">
-              <div className="flex items-center gap-2 mb-8">
-                <span className="dot dot-pulse" />
+            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-14">
+              {/* Left — text */}
+              <div className="flex-1 min-w-0">
+                <MotionWrapper variant="fadeUp">
+                  <div className="flex items-center gap-2 mb-8">
+                    <span className="dot dot-pulse" />
+                  </div>
+                </MotionWrapper>
+
+                <MotionWrapper variant="fadeUp" delay={0.06}>
+                  <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-[80px] font-semibold tracking-[-0.025em] leading-[0.95] text-[var(--color-fg)] mb-8">
+                    Independent AI engineer building
+                    <span className="text-[var(--color-fg-muted)]">
+                      {" "}production systems for{" "}
+                    </span>
+                    <span className="text-[var(--color-accent)]">enterprise clients</span>
+                    <span className="text-[var(--color-fg-muted)]">.</span>
+                  </h1>
+                </MotionWrapper>
+
+                <MotionWrapper variant="fadeUp" delay={0.12}>
+                  <p className="text-lg md:text-xl text-[var(--color-fg-muted)] max-w-2xl leading-relaxed mb-10">
+                    Multi-agent workflows, RAG over messy domain data, and voice-first
+                    interfaces. I work end-to-end — architecture, code, deployment —
+                    so you ship a real system, not a prototype with a demo URL.
+                  </p>
+                </MotionWrapper>
+
+                <MotionWrapper variant="fadeUp" delay={0.18}>
+                  <div className="flex items-center gap-3">
+                    <ContactFormDialog label="Start a project" variant="default" size="default" />
+                    <Button variant="outline" size="default" asChild>
+                      <a href="#work" className="no-underline">
+                        See selected work
+                      </a>
+                    </Button>
+                  </div>
+                </MotionWrapper>
               </div>
-            </MotionWrapper>
 
-            <MotionWrapper variant="fadeUp" delay={0.06}>
-              <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-[88px] font-semibold tracking-[-0.025em] leading-[0.95] text-[var(--color-fg)] mb-8 max-w-4xl">
-                Independent AI engineer building
-                <span className="text-[var(--color-fg-muted)]">
-                  {" "}production systems for{" "}
-                </span>
-                <span className="text-[var(--color-accent)]">enterprise clients</span>
-                <span className="text-[var(--color-fg-muted)]">.</span>
-              </h1>
-            </MotionWrapper>
-
-            <MotionWrapper variant="fadeUp" delay={0.12}>
-              <p className="text-lg md:text-xl text-[var(--color-fg-muted)] max-w-2xl leading-relaxed mb-10">
-                Multi-agent workflows, RAG over messy domain data, and voice-first
-                interfaces. I work end-to-end — architecture, code, deployment —
-                so you ship a real system, not a prototype with a demo URL.
-              </p>
-            </MotionWrapper>
-
-            <MotionWrapper variant="fadeUp" delay={0.18}>
-              <div className="flex items-center gap-3">
-                <ContactFormDialog label="Start a project" variant="default" size="default" />
-                <Button variant="outline" size="default" asChild>
-                  <a href="#work" className="no-underline">
-                    See selected work
-                  </a>
-                </Button>
-              </div>
-            </MotionWrapper>
+              {/* Right — photo */}
+              <MotionWrapper variant="fadeUp" delay={0.1} className="flex-shrink-0 flex justify-center lg:justify-end">
+                <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-2xl overflow-hidden ring-1 ring-[var(--color-border)]">
+                  <Image
+                    src="/keshav.jpg"
+                    alt="Keshav"
+                    fill
+                    className="object-cover object-top"
+                    priority
+                  />
+                </div>
+              </MotionWrapper>
+            </div>
           </Container>
         </Section>
 
@@ -395,7 +414,7 @@ function SectionHeader({
   subtitle,
 }: {
   eyebrow: string
-  title: string
+  title?: string
   subtitle?: string
 }) {
   return (
@@ -407,11 +426,13 @@ function SectionHeader({
         </div>
       </MotionWrapper>
 
-      <MotionWrapper variant="fadeUp" delay={0.05}>
-        <h2 className="text-3xl md:text-5xl font-semibold tracking-[-0.02em] leading-tight text-[var(--color-fg)]">
-          {title}
-        </h2>
-      </MotionWrapper>
+      {title && (
+        <MotionWrapper variant="fadeUp" delay={0.05}>
+          <h2 className="text-3xl md:text-5xl font-semibold tracking-[-0.02em] leading-tight text-[var(--color-fg)]">
+            {title}
+          </h2>
+        </MotionWrapper>
+      )}
 
       {subtitle && (
         <MotionWrapper variant="fadeUp" delay={0.1}>
