@@ -46,7 +46,7 @@ const FREELANCE_PROJECTS = [
     cta: "Read the case study",
   },
   {
-    eyebrow: "Client work · 2025 — Present · Voice-first knowledge platform",
+    eyebrow: "Client work · 2026 — Present · Voice-first knowledge platform",
     title: "Knowledge Management Platform with Voice Agent",
     blurb:
       "A retrieval-augmented knowledge platform with a voice-first interface. Teams ingest PDFs, recorded sessions, and YouTube videos, then query them by speaking — like calling a colleague who's read everything you have.",
@@ -183,7 +183,6 @@ export default function Home() {
             <MotionWrapper variant="fadeUp">
               <div className="flex items-center gap-2 mb-8">
                 <span className="dot dot-pulse" />
-                <span className="label">Available for new engagements · May 2026</span>
               </div>
             </MotionWrapper>
 
@@ -224,8 +223,6 @@ export default function Home() {
           <Container>
             <SectionHeader
               eyebrow="Selected work"
-              title="Two systems shipped this year."
-              subtitle="Both still in production. Names withheld for client privacy — happy to share details on a call."
             />
 
             <MotionStaggerGroup className="grid grid-cols-1 lg:grid-cols-2 gap-5 mt-12">

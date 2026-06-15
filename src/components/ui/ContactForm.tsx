@@ -1,6 +1,7 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
+import { createPortal } from "react-dom"
 import { Button } from "./button"
 import { sendEmailAction } from "@/app/actions/contact"
 import { X, Check } from "lucide-react"
@@ -27,6 +28,9 @@ export function ContactFormDialog({
 }) {
   const [isOpen, setIsOpen] = useState(false)
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle")
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => { setMounted(true) }, [])
 
   // Esc to close
   useEffect(() => {
@@ -75,7 +79,7 @@ export function ContactFormDialog({
         {label}
       </Button>
 
-      {isOpen && (
+      {mounted && isOpen && createPortal(
         <div
           className="fixed inset-0 z-[100] flex items-center justify-center p-4 fade-rise"
           onClick={(e) => {
@@ -182,7 +186,8 @@ export function ContactFormDialog({
               </form>
             )}
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </>
   )
