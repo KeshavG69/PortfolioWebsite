@@ -184,12 +184,6 @@ export default function Home() {
             <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-14">
               {/* Left — text */}
               <div className="flex-1 min-w-0">
-                <MotionWrapper variant="fadeUp">
-                  <div className="flex items-center gap-2 mb-8">
-                    <span className="dot dot-pulse" />
-                  </div>
-                </MotionWrapper>
-
                 <MotionWrapper variant="fadeUp" delay={0.06}>
                   <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-[80px] font-semibold tracking-[-0.025em] leading-[0.95] text-[var(--color-fg)] mb-8">
                     Independent AI engineer building
