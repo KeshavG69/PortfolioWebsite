@@ -3,12 +3,9 @@ import { ArrowUpRight } from "lucide-react"
 import { RunningHead, type Clause } from "@/components/RunningHead"
 import { ContactForm } from "@/components/ContactForm"
 
-// ─────────────────────────────────────────────────────────────────
-// Booking link — TODO(keshav): paste your Calendly / Cal.com URL here.
-// Until it's set, "Book an intro call" jumps to the contact clause.
-// ─────────────────────────────────────────────────────────────────
-const BOOKING_URL: string | null = null
-const BOOKING_HREF = BOOKING_URL ?? "#next-step"
+// Booking link — "Book an intro call" opens Calendly in a new tab.
+const BOOKING_HREF = "https://calendly.com/gargkeshav5042004/30min"
+const NEW_TAB = { target: "_blank", rel: "noopener noreferrer" } as const
 const EMAIL = "gargkeshav504@gmail.com"
 
 // ─────────────────────────────────────────────────────────────────
@@ -300,6 +297,7 @@ export default function Home() {
               <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
                 <a
                   href={BOOKING_HREF}
+                  {...NEW_TAB}
                   className="inline-flex min-h-12 items-center px-6 bg-[var(--color-accent)] text-white font-semibold no-underline hover:bg-[var(--color-accent-deep)] transition-colors [transition-duration:140ms]"
                 >
                   Book an intro call
@@ -545,6 +543,7 @@ export default function Home() {
               </p>
               <a
                 href={BOOKING_HREF}
+                {...NEW_TAB}
                 className="mt-8 inline-flex min-h-12 items-center px-6 bg-[var(--color-accent)] text-white font-semibold no-underline hover:bg-[var(--color-accent-deep)] transition-colors [transition-duration:140ms]"
               >
                 Book an intro call

@@ -132,6 +132,8 @@ export function RunningHead({
 
         <a
           href={bookingHref}
+          target="_blank"
+          rel="noopener noreferrer"
           className="hidden md:inline-flex min-h-10 items-center px-4 bg-[var(--color-accent)] text-white text-sm font-semibold no-underline hover:bg-[var(--color-accent-deep)] transition-colors [transition-duration:140ms]"
         >
           Book an intro call
