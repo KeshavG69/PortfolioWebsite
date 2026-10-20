@@ -1,185 +1,117 @@
 @import "tailwindcss";
 
-@theme {
-  /* ───── Type ───── */
-  --font-sans: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
-
-  /* ───── Surface palette ─────
-     Layered grays so cards feel elevated without resorting to borders/shadows.
-     Background isn't pure black — pure black on a glossy display reads as a
-     hole. A barely-warm dark gray reads as "room with the lights low." */
-  --color-bg:           #0A0A0B;
-  --color-bg-elevated:  #111113;
-  --color-bg-overlay:   #16161A;
-  --color-fg:           #EDEDEC;
-  --color-fg-muted:     #9A9A98;
-  --color-fg-subtle:    #6B6B68;
-  --color-border:       #1F1F22;
-  --color-border-hover: #2A2A2E;
-  --color-accent:       #FF6B35;     /* slightly warmer/refined orange */
-  --color-accent-soft:  rgba(255, 107, 53, 0.12);
-
-  /* Legacy neo-* names kept so existing components don't break mid-refactor */
-  --color-neo-bg:     var(--color-bg);
-  --color-neo-fg:     var(--color-fg);
-  --color-neo-accent: var(--color-accent);
-  --color-neo-border: var(--color-border);
-  --color-neo-muted:  var(--color-fg-muted);
+/* ─────────────────────────────────────────────────────────────────
+   The Specification — the site set as an engineering standard.
+   White paper, black ink, one deep-blue accent for actions and results.
+   `inline` so the next/font variables resolve where they're used,
+   not at :root (where they don't exist).
+   ───────────────────────────────────────────────────────────────── */
+@theme inline {
+  --font-sans: var(--font-public-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-archivo), var(--font-public-sans), ui-sans-serif, sans-serif;
 }
 
 @layer base {
+  /* Colors live on :root (not @theme) so Tailwind never tree-shakes them;
+     they're consumed through arbitrary values like bg-[var(--color-accent)]. */
   :root {
-    --background: var(--color-bg);
-    --foreground: var(--color-fg);
-
-    /* ───── Motion tokens (per Emil's framework) ─────
-       Custom curves because the built-in CSS easings are too weak for
-       interface motion. Strong ease-out feels responsive; ease-in-out feels
-       deliberate. Drawer curve is the iOS-feel from Ionic. */
-    --ease-out:      cubic-bezier(0.23, 1, 0.32, 1);
-    --ease-in-out:   cubic-bezier(0.77, 0, 0.175, 1);
-    --ease-drawer:   cubic-bezier(0.32, 0.72, 0, 1);
-
-    /* Durations: stay under 300ms for UI; longer only for marketing/reveal. */
-    --dur-press:    140ms;
-    --dur-hover:    160ms;
-    --dur-popover:  200ms;
-    --dur-reveal:   320ms;
+    --color-paper: #ffffff;
+    --color-paper-2: #f3f3f1;   /* table heads, hovered rows */
+    --color-ink: #111111;
+    --color-ink-2: #474747;     /* secondary text — 9.2:1 on paper */
+    --color-ink-3: #696969;     /* notes, captions — 5.6:1 on paper */
+    --color-rule: #d6d6d2;      /* soft rules inside tables */
+    --color-accent: #1f4fd8;    /* deep blue — 6.0:1 on paper */
+    --color-accent-deep: #173ea8;
+    --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+    --head-h: 56px;
   }
 
   html {
-    color-scheme: dark;
+    color-scheme: light;
+    scroll-padding-top: calc(var(--head-h) + 16px);
   }
 
   body {
-    background: var(--color-bg);
-    color: var(--color-fg);
+    background: var(--color-paper);
+    color: var(--color-ink);
     font-family: var(--font-sans);
-    font-feature-settings: "ss01", "cv11";
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+    font-variant-numeric: lining-nums;
   }
 
-  /* Ambient grain on the body — a single tiny detail you'll never
-     consciously notice, but the page reads warmer for it. */
-  body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: 1;
-    opacity: 0.025;
-    background-image:
-      radial-gradient(circle at 1px 1px, #fff 1px, transparent 0);
-    background-size: 3px 3px;
-    mix-blend-mode: overlay;
-  }
-
-  /* Selection — accent color, not the default blue. Compounds with the brand. */
   ::selection {
     background: var(--color-accent);
-    color: #0A0A0B;
+    color: #fff;
   }
 
-  /* Focus rings — visible but unobtrusive. */
+  input, textarea {
+    caret-color: var(--color-accent);
+  }
+
   :focus-visible {
     outline: 2px solid var(--color-accent);
-    outline-offset: 2px;
-    border-radius: 2px;
+    outline-offset: 3px;
   }
 
-  /* Reduced motion: keep opacity/color, drop translate/scale. */
-  @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after {
-      animation-duration: 0.01ms !important;
-      transition-duration: 0.01ms !important;
-    }
+  a {
+    text-underline-offset: 0.2em;
+    text-decoration-thickness: 1px;
+  }
+
+  html {
+    scrollbar-color: #9a9a96 var(--color-paper);
+    scrollbar-width: thin;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html { scroll-behavior: smooth; }
   }
 }
 
 @layer utilities {
-  /* Subtle elevated card surface. */
-  .surface {
-    background: var(--color-bg-elevated);
-    border: 1px solid var(--color-border);
+  .font-display {
+    font-family: var(--font-display);
   }
 
-  /* Hairline divider — barely visible but creates rhythm. */
-  .hairline {
-    border-color: var(--color-border);
+  /* Wide cut of Archivo for result figures. */
+  .wide {
+    font-variation-settings: "wdth" 125;
   }
 
-  /* Mono label — for tags, section eyebrows, status pills. */
-  .label {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    line-height: 1;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--color-fg-muted);
+  /* Bullets — small ink squares. */
+  .bullets {
+    list-style: none;
   }
-
-  /* Accent dot — used for active status, list bullets. */
-  .dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--color-accent);
-    display: inline-block;
-  }
-  .dot-pulse {
+  .bullets > li {
     position: relative;
+    padding-left: 1.25rem;
   }
-  .dot-pulse::after {
+  .bullets > li::before {
     content: "";
     position: absolute;
-    inset: -4px;
-    border-radius: 50%;
-    background: var(--color-accent);
-    opacity: 0.35;
-    animation: dot-pulse 2s var(--ease-in-out) infinite;
+    left: 0;
+    top: 0.65em;
+    width: 6px;
+    height: 6px;
+    background: var(--color-ink);
   }
 
-  /* Reveal-on-scroll utility (used by sections via JS observer in page.tsx). */
-  .reveal {
-    opacity: 0;
-    transform: translateY(8px);
-    transition:
-      opacity var(--dur-reveal) var(--ease-out),
-      transform var(--dur-reveal) var(--ease-out);
-  }
-  .reveal.in {
-    opacity: 1;
-    transform: translateY(0);
+  .tnum {
+    font-variant-numeric: tabular-nums lining-nums;
   }
 
-  /* Hover effects — only on devices with a real cursor.
-     Touch hover triggers on tap and creates false positives. */
-  @media (hover: hover) and (pointer: fine) {
-    .hover-lift {
-      transition: transform var(--dur-hover) var(--ease-out),
-                  border-color var(--dur-hover) var(--ease-out);
-    }
-    .hover-lift:hover {
-      transform: translateY(-1px);
-      border-color: var(--color-border-hover);
-    }
+  /* Evidence weight on result figures: solid = production / client-reported,
+     dashed = demo data or capability, so the reader sees how hard each number is. */
+  .evidence-solid {
+    text-decoration: underline solid currentColor;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.18em;
   }
-}
-
-@keyframes dot-pulse {
-  0%   { transform: scale(1);   opacity: 0.35; }
-  70%  { transform: scale(2.4); opacity: 0;    }
-  100% { transform: scale(2.4); opacity: 0;    }
-}
-
-/* Stagger keyframe used by hero and section headers. */
-@keyframes fade-rise {
-  from { opacity: 0; transform: translateY(10px); }
-  to   { opacity: 1; transform: translateY(0);    }
-}
-
-.fade-rise {
-  animation: fade-rise var(--dur-reveal) var(--ease-out) both;
+  .evidence-dashed {
+    text-decoration: underline dashed currentColor;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.18em;
+  }
 }
